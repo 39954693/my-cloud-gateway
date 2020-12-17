@@ -1,0 +1,44 @@
+*~
+#*
+*#
+.#*
+.classpath
+.project
+.settings/
+.springBeans
+target/
+bin/
+_site/
+.idea
+*.iml
+*.ipr
+*.iws
+.factorypath
+*.log
+.shelf
+*.swp
+*.swo
+
+### TARGET ###
+HELP.md
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### STS ###
+.apt_generated
+.settings
+.sts4-cache
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
