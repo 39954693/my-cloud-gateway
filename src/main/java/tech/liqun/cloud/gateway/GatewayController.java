@@ -1,15 +1,21 @@
 package tech.liqun.cloud.gateway;
 
+import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.server.ServerWebExchange;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.Objects;
 
+/**
+ * @author DHC
+ **/
 @RestController
+@SuppressWarnings("unused")
 public class GatewayController {
     private final WebClient webClient;
 
@@ -26,7 +32,8 @@ public class GatewayController {
                     ServerHttpResponse response = exchange.getResponse();
                     response.getHeaders().putAll(clientResponse.headers().asHttpHeaders());
                     response.setStatusCode(clientResponse.statusCode());
-                    return response.writeWith(clientResponse.body((inputMessage, context) -> inputMessage.getBody()));
+                    Flux<DataBuffer> body = clientResponse.body((inputMessage, context) -> inputMessage.getBody());
+                    return response.writeWith(body);
                 });
     }
 
