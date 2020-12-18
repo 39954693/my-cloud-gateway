@@ -10,6 +10,9 @@ target/
 bin/
 _site/
 .idea
+.mvn
+mvnw
+mvnw.cmd
 *.iml
 *.ipr
 *.iws
