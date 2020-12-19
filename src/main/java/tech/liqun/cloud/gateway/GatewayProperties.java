@@ -27,7 +27,8 @@ public class GatewayProperties {
     public static class Route {
         private String id;
         private String path;
-        private String url;
+        private String host;
+        private String port;
 
         public String getId() {
             return id;
@@ -45,12 +46,30 @@ public class GatewayProperties {
             this.path = path;
         }
 
-        public String getUrl() {
-            return url;
+        public String getHost() {
+            return host;
         }
 
-        public void setUrl(String url) {
-            this.url = url;
+        public void setHost(String host) {
+            this.host = host;
+        }
+
+        public String getPort() {
+            return port;
+        }
+
+        public void setPort(String port) {
+            this.port = port;
+        }
+
+        @Override
+        public String toString() {
+            return "Route{" +
+                    "id='" + id + '\'' +
+                    ", path='" + path + '\'' +
+                    ", host='" + host + '\'' +
+                    ", port='" + port + '\'' +
+                    '}';
         }
     }
 }

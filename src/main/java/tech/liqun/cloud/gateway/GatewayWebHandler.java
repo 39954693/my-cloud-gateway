@@ -8,11 +8,13 @@ import org.springframework.web.server.WebHandler;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.net.URI;
 import java.util.Objects;
 
 /**
  * @author DHC
  **/
+@SuppressWarnings("unused")
 public class GatewayWebHandler implements WebHandler {
 
     private final GatewayProperties properties;
@@ -25,7 +27,7 @@ public class GatewayWebHandler implements WebHandler {
 
     @Override
     public Mono<Void> handle(ServerWebExchange exchange) {
-        return this.webClient.get().uri((String) Objects.requireNonNull(exchange.getAttribute("requestUrl")))
+        return this.webClient.get().uri((URI) Objects.requireNonNull(exchange.getAttribute("requestUri")))
                 .headers(httpHeaders -> httpHeaders.addAll(exchange.getRequest().getHeaders()))
                 .exchange().flatMap(clientResponse -> {
                     ServerHttpResponse response = exchange.getResponse();
