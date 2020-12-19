@@ -3,32 +3,27 @@ package tech.liqun.cloud.gateway;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.SpringBootConfiguration;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
 import org.springframework.core.annotation.Order;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilter;
 import reactor.core.publisher.Mono;
 
-@SpringBootApplication
+//TODO: move to autoconfig
+@Import(GatewayConfiguration.class)
+@SpringBootConfiguration
+@EnableAutoConfiguration
 public class MyCloudGatewayApplication {
 
 	private static final Log log = LogFactory.getLog(MyCloudGatewayApplication.class);
 
-	@Bean
-	public WebClient webClient(){
-		return WebClient.create();
-	}
-	@Bean
-	@Order(500)
-	public WebFilter findRouteFilter(){
-		return (exchange, chain) -> {
-			log.info("findRouteFilter start");
-			exchange.getAttributes().put("requestUrl", "http://httpbin.org/get");
-			return chain.filter(exchange);
-		};
-	}
+
 	// TODO: request only, how to filter response?
 	@Bean
 	@Order(501)
@@ -53,7 +48,10 @@ public class MyCloudGatewayApplication {
 		return Mono.empty();
 	}
 	public static void main(String[] args) {
-		SpringApplication.run(MyCloudGatewayApplication.class, args);
+		new SpringApplicationBuilder()
+				.sources(MyCloudGatewayApplication.class)
+				//TODO: howto do programatically
+				.run(args);
 	}
 
 }
